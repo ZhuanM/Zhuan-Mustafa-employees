@@ -1,0 +1,11 @@
+<div class="row justify-content-center align-items-center">
+  <button mat-raise-button>
+    Upload CSV
+  </button>
+
+  <ng-container *ngIf="fileData">
+    <table mat-table [dataSource]="fileData" class="mat-elevation-z8">
+
+    </table>
+  </ng-container>
+</div>
