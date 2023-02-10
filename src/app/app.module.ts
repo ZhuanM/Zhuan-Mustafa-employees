@@ -7,6 +7,7 @@ import { EmployeesComponent } from "./employees/employees.component";
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatTableModule } from '@angular/material/table';
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressSpinnerModule
   ]
 })
 export class AppModule { }
