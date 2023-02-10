@@ -39,19 +39,25 @@ export class EmployeesComponent {
         // Current Project
         let currentProjectId: string = currentLine[1];
 
-        // DateFrom
+        // Current DateFrom
         let currentDateFromArr: Array<string> = currentLine[2].split("-");
         let currentYearFrom: number = parseInt(currentDateFromArr[0]);
         let currentMonthFrom: number = parseInt(currentDateFromArr[1]) - 1;
         let currentDayFrom: number = parseInt(currentDateFromArr[2]);
         let currentDateFrom: Date = new Date(currentYearFrom, currentMonthFrom, currentDayFrom);
 
-        // DateTo
-        let currentDateToArr: Array<string> = currentLine[3].split("-");
-        let currentYearTo: number = parseInt(currentDateToArr[0]);
-        let currentMonthTo: number = parseInt(currentDateToArr[1]) - 1;
-        let currentDayTo: number = parseInt(currentDateToArr[2]);
-        let currentDateTo: Date = new Date(currentYearTo, currentMonthTo, currentDayTo);
+        // Current DateTo
+        let currentDateTo: Date;
+        if (currentLine[3] == "NULL") {
+          currentDateTo = new Date();
+        } else {
+          let currentDateToArr: Array<string> = currentLine[3].split("-");
+          let currentYearTo: number = parseInt(currentDateToArr[0]);
+          let currentMonthTo: number = parseInt(currentDateToArr[1]) - 1;
+          let currentDayTo: number = parseInt(currentDateToArr[2]);
+
+          currentDateTo = new Date(currentYearTo, currentMonthTo, currentDayTo);
+        }
 
         for (let j = i + 1; j < lines.length; j++) {
           let nextLine: Array<string> = lines[j].split(",");
@@ -70,13 +76,20 @@ export class EmployeesComponent {
           let nextDateFrom: Date = new Date(nextYearFrom, nextMonthFrom, nextDayFrom);
 
           // Next DateTo
-          let nextDateToArr: Array<string> = nextLine[3].split("-");
-          let nextYearTo: number = parseInt(nextDateToArr[0]);
-          let nextMonthTo: number = parseInt(nextDateToArr[1]) - 1;
-          let nextDayTo: number = parseInt(nextDateToArr[2]);
-          let nextDateTo: Date = new Date(nextYearTo, nextMonthTo, nextDayTo);
+          let nextDateTo: Date;
+          if (nextLine[3] == "NULL") {
+            nextDateTo = new Date();
+          } else {
+            let nextDateToArr: Array<string> = nextLine[3].split("-");
+            let nextYearTo: number = parseInt(nextDateToArr[0]);
+            let nextMonthTo: number = parseInt(nextDateToArr[1]) - 1;
+            let nextDayTo: number = parseInt(nextDateToArr[2]);
+            
+            nextDateTo = new Date(nextYearTo, nextMonthTo, nextDayTo);
+          }
 
           if (currentEmployeeId !== nextEmployeeId && currentProjectId === nextProjectId) {
+            // Get overlapping days of employees
             let overlapStart: number = Math.max(currentDateFrom.getTime(), nextDateFrom.getTime());
             let overlapEnd: number = Math.min(currentDateTo.getTime(), nextDateTo.getTime());
             let overlapDays: number = Math.max(0, (overlapEnd - overlapStart) / this.MILLISECONDS_IN_DAY + 1);
